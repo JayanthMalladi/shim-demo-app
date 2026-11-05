@@ -1,0 +1,22 @@
+{
+  "name": "shim-demo-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo target for Shim Desk: a small AI SDK 6 app with seeded silent breaks",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.0",
+    "ai": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.0"
+  }
+}
