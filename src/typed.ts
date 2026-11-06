@@ -11,14 +11,15 @@ export function run(prompt: string) {
 }
 
 export function summarize(result: Awaited<ReturnType<typeof generateText>>) {
-  const history = result.response.messages;
-  bill(result.usage.totalTokens);
-  return { history, warnings: result.warnings, text: result.text };
+  const history = result.finalStep.response.messages;
+  bill(result.finalStep.usage.totalTokens);
+  return { history, warnings: result.finalStep.warnings, text: result.text };
 }
 
-export function viaResultType(result: GenerateTextResult<any, any, any>, other?: StreamTextResult<any, any>) {
-  const { toolCalls, text } = result;
-  return { toolCalls, text, sources: other?.sources };
+export async function viaResultType(result: GenerateTextResult<any, any, any>, other?: StreamTextResult<any, any>) {
+  const { toolCalls } = result.finalStep;
+  const sources = other ? (await other.finalStep).sources : undefined;
+  return { toolCalls, text: result.text, sources };
 }
 
 export function textOnly(result: Awaited<ReturnType<typeof generateText>>) {
@@ -40,13 +41,14 @@ export class Recorder {
   keep(last: Awaited<ReturnType<typeof streamText>>) {
     this.last = last;
   }
-  files() {
-    return this.last?.files;
+  async files() {
+    const last = this.last ? await this.last.finalStep : undefined;
+    return last?.files;
   }
 }
 
-export function tracked() {
+export async function tracked() {
   // Initialised straight from the call, so the multi-step tracker owns it: reported once, as multi-step-result.
   const result: StreamTextResult<any, any> = streamText({ model, tools, stopWhen: stepCountIs(3) });
-  return result.toolCalls;
+  return (await result.finalStep).toolCalls;
 }
