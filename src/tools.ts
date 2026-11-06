@@ -10,7 +10,7 @@ export const search = tool({
 
 // An options literal passed to a tool's `.execute(...)` with no `context` -> flagged.
 export function callNoContext() {
-  return search.execute({ q: 'hi' }, { toolCallId: 'call_1', messages: [] });
+  return search.execute({ q: 'hi' }, { toolCallId: 'call_1', messages: [], context: {} });
 }
 
 // The same call with a `context` field: already correct, must NOT be flagged.
@@ -19,7 +19,7 @@ export function callWithContext() {
 }
 
 // A variable explicitly typed ToolExecutionOptions, missing `context` -> flagged.
-const opts: ToolExecutionOptions<any> = { toolCallId: 'call_2', messages: msgs };
+const opts: ToolExecutionOptions<any> = { toolCallId: 'call_2', messages: msgs, context: {} };
 export function typedNoContext() {
   return opts;
 }

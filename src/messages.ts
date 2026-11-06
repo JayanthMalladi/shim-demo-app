@@ -39,7 +39,7 @@ export async function alreadyAllowed() {
 }
 
 export async function viaSpread(extra: { messages: any[] }) {
-  return generateText({ model, ...extra });
+  return generateText({ model, ...extra, allowSystemInMessages: true });
 }
 
 export function agents(q: string) {

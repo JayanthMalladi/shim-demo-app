@@ -5,15 +5,16 @@
   "description": "Demo target for Shim Desk: a small AI SDK 6 app with seeded silent breaks",
   "type": "module",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^3.0.0",
-    "ai": "^6.0.0"
+    "@ai-sdk/openai": "^4.0.0",
+    "@ai-sdk/otel": "^1.0.163",
+    "ai": "^7.0.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
