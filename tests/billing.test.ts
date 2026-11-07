@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateText, stepCountIs, tool, jsonSchema } from 'ai';
+import { generateText, isStepCount, tool, jsonSchema } from 'ai';
 import { MockLanguageModelV3 } from 'ai/test';
 import { tokensToBill } from '../src/billing.js';
 
@@ -38,7 +38,7 @@ async function run() {
   return generateText({
     model,
     tools,
-    stopWhen: stepCountIs(2),
+    stopWhen: isStepCount(2),
     prompt: 'say hi',
   });
 }
